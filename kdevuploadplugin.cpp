@@ -77,7 +77,7 @@ class FilesTreeViewFactory: public KDevelop::IToolViewFactory{
 };
 
 UploadPlugin::UploadPlugin(QObject *parent, const QVariantList &)
-: KDevelop::IPlugin(QStringLiteral("uploadplugin"), parent),  m_outputModel(0), m_filesTreeViewFactory(0)
+: KDevelop::IPlugin(QStringLiteral("kdevupload"), parent),  m_outputModel(0), m_filesTreeViewFactory(0)
 {
     connect(core()->projectController(), SIGNAL(projectOpened(KDevelop::IProject*)),
                    this, SLOT(projectOpened(KDevelop::IProject*)));
@@ -88,7 +88,7 @@ UploadPlugin::UploadPlugin(QObject *parent, const QVariantList &)
     connect(core()->documentController(), SIGNAL(documentClosed(KDevelop::IDocument*)),
                 SLOT(documentClosed(KDevelop::IDocument*)));
 
-    setXMLFile("kdevupload.rc");
+    setXMLFile( QStringLiteral( "kdevupload.rc" ) );
 
     m_allProfilesModel = new AllProfilesModel(this);
     connect(m_allProfilesModel, SIGNAL(rowsInserted(QModelIndex, int, int)),
@@ -214,12 +214,12 @@ KDevelop::ContextMenuExtension UploadPlugin::contextMenuExtension(KDevelop::Cont
                 UploadProfileModel* model = m_projectProfileModels.value(project);
                 if (model && model->rowCount()) {
                     QAction *action;
-                    action = new QAction(i18n("Upload..."), parent);
+                    action = new QAction(i18n("Upload..."), this);
                     action->setIcon(QIcon::fromTheme("go-up"));
                     connect(action, SIGNAL(triggered()), this, SLOT(upload()));
                     cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
     
-                    action = new QAction(i18n("Quick Upload"), parent);
+                    action = new QAction(i18n("Quick Upload"), this);
                     action->setIcon(QIcon::fromTheme("go-up"));
                     connect(action, SIGNAL(triggered()), this, SLOT(quickUpload()));
                     cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
@@ -229,7 +229,7 @@ KDevelop::ContextMenuExtension UploadPlugin::contextMenuExtension(KDevelop::Cont
             }
         }
     }
-    return KDevelop::IPlugin::contextMenuExtension(context, parent);
+    return KDevelop::IPlugin::contextMenuExtension(context);
 }
 
 void UploadPlugin::upload()
