@@ -35,7 +35,7 @@ Q_OBJECT
 public:
     UploadPlugin(QObject *parent, const QVariantList & = QVariantList() );
     ~UploadPlugin();
-    void unload();
+    
 
     /**
     * Returns the Upload-Action for the Contextmenu.
@@ -47,6 +47,9 @@ public:
     * Creates the output-view (only the first time called)
     */
     QStandardItemModel* outputModel();
+    
+    int perProjectConfigPages() const override;
+    KDevelop::ConfigPage* perProjectConfigPage(int number, const KDevelop::ProjectConfigOptions& options, QWidget* parent) override;
 
 private Q_SLOTS:
     /**
