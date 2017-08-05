@@ -60,6 +60,12 @@ private Q_SLOTS:
     * Executed from context-menu
     */
     void quickUpload();
+    
+    /**
+    * Downloads the previously selected file without any futher actions needed by the user.
+    * Executed from context-menu
+    */
+    void quickDownload();
 
     /**
     * Opens the UploadDialog for the project.

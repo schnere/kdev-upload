@@ -224,6 +224,11 @@ KDevelop::ContextMenuExtension UploadPlugin::contextMenuExtension(KDevelop::Cont
                     connect(action, SIGNAL(triggered()), this, SLOT(quickUpload()));
                     cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
                     
+                    action = new QAction(i18n("Quick Download"), this);
+                    action->setIcon(QIcon::fromTheme("go-down"));
+                    connect(action, SIGNAL(triggered()), this, SLOT(quickDownload()));
+                    cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
+                    
                     return cmExtension;
                 }
             }
@@ -243,6 +248,7 @@ void UploadPlugin::upload()
     dialog.setRootItem(m_ctxUrlList.at(0));
     dialog.exec();
 }
+
 void UploadPlugin::quickUpload()
 {
     if (m_ctxUrlList.isEmpty()) return;
@@ -270,6 +276,32 @@ void UploadPlugin::quickUpload()
     job->start();
 }
 
+void UploadPlugin::quickDownload()
+{
+    if (m_ctxUrlList.isEmpty()) return;
+    KDevelop::IProject* project = m_ctxUrlList.at(0)->project();
+
+    UploadProjectModel* model = new UploadProjectModel(project);
+    model->setSourceModel(project->projectItem()->model());
+    model->setRootItem(m_ctxUrlList.at(0));
+
+    UploadProfileModel* profileModel = m_projectProfileModels.value(project);
+    for (int i = 0; i < profileModel->rowCount(); i++) {
+        UploadProfileItem* item = profileModel->uploadItem(i);
+        if (item->isDefault()) {
+            KConfigGroup c = item->profileConfigGroup();
+            if (c.isValid()) {
+                model->setProfileConfigGroup(c);
+            }
+            break;
+        }
+    }
+
+    UploadJob* job = new UploadJob(project, model, core()->uiController()->activeMainWindow());
+    job->setQuickUpload(true);
+    job->setOutputModel(outputModel());
+    job->start();
+}
 
 void UploadPlugin::quickUploadCurrentFile()
 {
