@@ -40,7 +40,7 @@ public:
     /**
     * Returns the Upload-Action for the Contextmenu.
     */
-    KDevelop::ContextMenuExtension contextMenuExtension(KDevelop::Context* context, QWidget* parent);
+    KDevelop::ContextMenuExtension contextMenuExtension(KDevelop::Context* context);
 
     /**
     * Returns (and creates) the outputModel used for UploadPlugin.
