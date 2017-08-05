@@ -62,13 +62,10 @@ ecm_qt_declare_logging_category(projectfilter_SRCS
     CATEGORY_NAME "kdevelop.plugins.upload"
 )
 
-
 ki18n_wrap_ui(uploadpreferences_PART_SRCS uploadpreferences.ui uploadprofiledlg.ui uploaddialog.ui)
 kconfig_add_kcfg_files( kdevupload_PART_SRCS uploadconfig.kcfgc )
 
 add_library(kdevupload_PART_SRCS ${kdevupload_UI})
-
-
 
 qt5_add_resources(kdevupload_PART_SRCS kdevupload.qrc)
 kdevplatform_add_plugin(kdevupload JSON kdevupload.json SOURCES ${kdevupload_PART_SRCS})
@@ -86,14 +83,3 @@ target_link_libraries(kdevupload
     KF5::KIONTLM
     KF5::CoreAddons
 )
-
-#preferences-plugin
-# set(uploadpreferences_PART_SRCS
-#     kdevuploadplugin.cpp
-#    uploadpreferences.cpp
-#    uploadprofilemodel.cpp
-#    uploadprofileitem.cpp
-#    uploadprofiledlg.cpp
-# )
-# 
-# add_library(uploadpreferences_PART_SRCS uploadpreferences.ui uploadprofiledlg.ui uploaddialog.ui)

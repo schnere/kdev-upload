@@ -77,6 +77,7 @@ void UploadPreferences::apply()
 {
 //     UploadSettings::self()->setMakeExecutable(m_prefsUi->makeExecutable->text());
 //     UploadSettings::self()->save(); 
+    m_model->submit();
     ProjectConfigPage::apply();
 }
 
