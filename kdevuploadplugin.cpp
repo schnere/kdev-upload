@@ -238,7 +238,7 @@ int UploadPlugin::perProjectConfigPages() const
 
 KDevelop::ConfigPage* UploadPlugin::perProjectConfigPage(int number, const KDevelop::ProjectConfigOptions& options, QWidget* parent)
 {
-    return number == 0 ? nullptr : new UploadPreferences(this, options, parent);
+    return number == 0 ? new UploadPreferences(this, options, parent) : nullptr;
 }
 
 void UploadPlugin::upload()
