@@ -214,12 +214,12 @@ KDevelop::ContextMenuExtension UploadPlugin::contextMenuExtension(KDevelop::Cont
                 UploadProfileModel* model = m_projectProfileModels.value(project);
                 if (model && model->rowCount()) {
                     QAction *action;
-                    action = new QAction(i18n("Upload..."), this);
+                    action = new QAction(i18n("Upload..."), parent);
                     action->setIcon(QIcon::fromTheme("go-up"));
                     connect(action, SIGNAL(triggered()), this, SLOT(upload()));
                     cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
     
-                    action = new QAction(i18n("Quick Upload"), this);
+                    action = new QAction(i18n("Quick Upload"), parent);
                     action->setIcon(QIcon::fromTheme("go-up"));
                     connect(action, SIGNAL(triggered()), this, SLOT(quickUpload()));
                     cmExtension.addAction(KDevelop::ContextMenuExtension::FileGroup, action);
@@ -229,7 +229,7 @@ KDevelop::ContextMenuExtension UploadPlugin::contextMenuExtension(KDevelop::Cont
             }
         }
     }
-    return KDevelop::IPlugin::contextMenuExtension(context);
+    return KDevelop::IPlugin::contextMenuExtension(context, parent);
 }
 
 void UploadPlugin::upload()
