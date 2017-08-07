@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+cmake_minimum_required(VERSION 3.0)
+>>>>>>> upstream/master
 project(upload)
 
 set(VERSION_MAJOR 1)
@@ -8,7 +12,6 @@ set( KDEVPLATFORM_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
 configure_file( "${upload_SOURCE_DIR}/version.h.cmake" "${upload_BINARY_DIR}/version.h" @ONLY )
 
-cmake_minimum_required(VERSION 2.8.12)
 find_package (ECM 0.0.9 REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${ECM_MODULE_PATH})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${upload_SOURCE_DIR}/cmake/)
@@ -27,8 +30,6 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED Core Widgets)
 set(KF5_DEP_VERSION "5.15.0")
 find_package(KF5 ${KF5_DEP_VERSION} REQUIRED COMPONENTS Config TextEditor I18n KCMUtils JobWidgets Service Parts KIO CoreAddons ItemModels XmlGui)
 find_package(KDevPlatform ${KDEVPLATFORM_VERSION} REQUIRED)
-
-include_directories(${KDEVPLATFORM_INCLUDE_DIR})
 
 include_directories(
    ${CMAKE_CURRENT_BINARY_DIR}

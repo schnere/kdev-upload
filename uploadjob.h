@@ -40,8 +40,8 @@ class UploadJob : public QObject
     Q_OBJECT
 
 public:
-    UploadJob(KDevelop::IProject* project, UploadProjectModel* model, QWidget *parent = 0);
-    virtual ~UploadJob();
+    UploadJob(KDevelop::IProject* project, UploadProjectModel* model, QWidget *parent = nullptr);
+    ~UploadJob() override;
 
     /**
      * Sets if the files should only be marked as uploaded

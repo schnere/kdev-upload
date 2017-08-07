@@ -56,19 +56,19 @@ class FilesTreeViewFactory: public KDevelop::IToolViewFactory{
     FilesTreeViewFactory(UploadPlugin* plugin, AllProfilesModel* model)
                 : m_plugin(plugin), m_allProfilesModel(model) {}
 
-    virtual QWidget* create(QWidget *parent = 0)
+    QWidget* create(QWidget *parent = nullptr) override
     {
         ProfilesFileTree* w = new ProfilesFileTree(m_plugin, parent);
         w->setModel(m_allProfilesModel);
         return w;
     }
 
-    virtual QString id() const
+    QString id() const override
     {
         return "org.quanta.UploadFactory";
     }
 
-    virtual Qt::DockWidgetArea defaultPosition()
+    Qt::DockWidgetArea defaultPosition() override
     {
         return Qt::RightDockWidgetArea;
     }
@@ -79,7 +79,7 @@ class FilesTreeViewFactory: public KDevelop::IToolViewFactory{
 };
 
 UploadPlugin::UploadPlugin(QObject *parent, const QVariantList &)
-: KDevelop::IPlugin(QStringLiteral("kdevupload"), parent),  m_outputModel(0), m_filesTreeViewFactory(0)
+: KDevelop::IPlugin(QStringLiteral("kdevupload"), parent),  m_outputModel(nullptr), m_filesTreeViewFactory(nullptr)
 {
     connect(core()->projectController(), SIGNAL(projectOpened(KDevelop::IProject*)),
                    this, SLOT(projectOpened(KDevelop::IProject*)));
@@ -329,7 +329,7 @@ QStandardItemModel* UploadPlugin::outputModel()
 
         return m_outputModel;
     }
-    return 0;
+    return nullptr;
 }
 
 void UploadPlugin::profilesRowChanged()
@@ -342,7 +342,7 @@ void UploadPlugin::profilesRowChanged()
     } else {
         if (m_filesTreeViewFactory) {
             core()->uiController()->removeToolView(m_filesTreeViewFactory);
-            m_filesTreeViewFactory = 0;
+            m_filesTreeViewFactory = nullptr;
         }
     }
     Q_FOREACH(UploadProfileModel* model, m_projectProfileModels) {

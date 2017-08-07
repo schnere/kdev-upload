@@ -40,7 +40,7 @@
 #include "kdevuploadplugin.h"
 
 UploadDialog::UploadDialog(KDevelop::IProject* project, UploadPlugin* plugin, QWidget *parent)
-    : QDialog(parent), m_project(project), m_profileModel(0), m_editProfileDlg(0), m_plugin(plugin)
+    : QDialog(parent), m_project(project), m_profileModel(nullptr), m_editProfileDlg(nullptr), m_plugin(plugin)
 {
     m_ui = new Ui::UploadDialog();
     m_ui->setupUi(this);
@@ -168,5 +168,4 @@ void UploadDialog::setProfileModel(UploadProfileModel* model)
         }
     }
 }
-#include "uploaddialog.moc"
 // kate: space-indent on; indent-width 4; tab-width 4; replace-tabs on

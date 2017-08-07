@@ -33,11 +33,11 @@ class AllProfilesModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    AllProfilesModel(UploadPlugin* plugin, QObject *parent = 0);
-    virtual ~AllProfilesModel();
+    AllProfilesModel(UploadPlugin* plugin, QObject *parent = nullptr);
+    ~AllProfilesModel() override;
 
-    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
-    int rowCount(const QModelIndex & parent = QModelIndex()) const;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const override;
+    int rowCount(const QModelIndex & parent = QModelIndex()) const override;
 
     /**
      * Returns a UploadProfileItem for a ModelIndex.

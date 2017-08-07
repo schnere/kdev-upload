@@ -20,7 +20,7 @@
 #include <project/projectmodel.h>
 
 UploadProjectModel::UploadProjectModel(KDevelop::IProject* project, QObject *parent)
-    : QSortFilterProxyModel(parent), m_project(project), m_rootItem(0)
+    : QSortFilterProxyModel(parent), m_project(project), m_rootItem(nullptr)
 {
 }
 
@@ -251,5 +251,4 @@ void UploadProjectModel::checkInvert()
     }
 }
 
-#include "uploadprojectmodel.moc"
 // kate: space-indent on; indent-width 4; tab-width 4; replace-tabs on
