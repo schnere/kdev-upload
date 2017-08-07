@@ -22,7 +22,6 @@
 #include "ui_uploadpreferences.h"
 #include "uploadprofiledlg.h"
 #include "uploadprofileitem.h"
-// #include "kdevuploadplugin.h"
 
 using namespace KDevelop;
 
@@ -30,11 +29,6 @@ UploadPreferences::UploadPreferences( KDevelop::IPlugin* plugin, const KDevelop:
     : ProjectConfigPage<UploadSettings>(plugin, options, parent)
 {
     IProject* project = options.project;
-
-//     QVBoxLayout * l = new QVBoxLayout( this );
-//     setLayout(l);
-//     QWidget* w = new QWidget();
-//     l->addWidget(w);
 
     m_ui = new Ui::UploadPreferences();
     m_ui->setupUi(this);
@@ -69,22 +63,16 @@ UploadPreferences::~UploadPreferences( )
 void UploadPreferences::reset()
 {
     ProjectConfigPage::reset();
-//     QSignalBlocker sigBlock(this);
-//     m_ui->makeExecutable->setText(UploadSettings::self()->makeExecutable());
 }
 
 void UploadPreferences::apply()
 {
-//     UploadSettings::self()->setMakeExecutable(m_prefsUi->makeExecutable->text());
-//     UploadSettings::self()->save(); 
     m_model->submit();
     ProjectConfigPage::apply();
 }
 
 void UploadPreferences::defaults()
 {
-//     UploadSettings::self()->setDefaults();
-//     m_ui->makeExecutable->setText(UploadSettings::self()->makeExecutable());
     ProjectConfigPage::defaults();
 }
 
@@ -132,5 +120,4 @@ QIcon UploadPreferences::icon() const
     return QIcon::fromTheme(QStringLiteral("go-up"));
 }
 
-// #include "uploadpreferences.moc"
 // kate: space-indent on; indent-width 4; tab-width 4; replace-tabs on
