@@ -38,6 +38,8 @@ UploadProfileDlg::UploadProfileDlg(QWidget *parent)
     m_ui = new Ui::UploadProfileDlg();
     m_ui->setupUi(widget);
 
+    m_ui->browseButtonLocal->setIcon(QIcon::fromTheme("document-open"));
+    connect(m_ui->browseButtonLocal, SIGNAL(clicked()), this, SLOT(browseLocal()));
     m_ui->browseButton->setIcon(QIcon::fromTheme("document-open"));
     connect(m_ui->browseButton, SIGNAL(clicked()), this, SLOT(browse()));
 
@@ -73,12 +75,15 @@ int UploadProfileDlg::editProfile(UploadProfileItem* item)
 {
     m_ui->lineProfileName->setText(item->text());
     m_ui->defaultProfile->setChecked(item->isDefault());
+    m_ui->lineLocalPath->setText(item->localUrl().toString());
     updateUrl(item->url());
 
     int result = exec();
     if (result == QDialog::Accepted) {
         item->setText(m_ui->lineProfileName->text());
         item->setUrl(currentUrl());
+        QUrl localUrl = QUrl(m_ui->lineLocalPath->text());
+        item->setLocalUrl(localUrl);
         item->setDefault(m_ui->defaultProfile->checkState() == Qt::Checked);
     }
     return result;
@@ -124,6 +129,23 @@ void UploadProfileDlg::browse()
         updateUrl(chosenDir);
     }
 }
+
+void UploadProfileDlg::browseLocal()
+{
+#if QT_VERSION >= 0x050400
+    QUrl chosenDir = QFileDialog::getExistingDirectoryUrl(this, QString(), m_ui->lineLocalPath->text());
+#else
+    QFileDialog dialog(this);
+    dialog.setDirectoryUrl(m_ui->lineLocalPath->text());
+    dialog.setOptions(QFileDialog::ShowDirsOnly);
+    dialog.exec();
+    QUrl chosenDir = dialog.selectedUrls().first();
+#endif
+    if(chosenDir.isValid()) {
+        m_ui->lineLocalPath->setText(chosenDir.path());
+    }
+}
+
 void UploadProfileDlg::slotAcceptButtonClicked()
 {
     KIO::StatJob* statJob = KIO::stat(currentUrl());
@@ -134,6 +156,14 @@ void UploadProfileDlg::slotAcceptButtonClicked()
         KMessageBox::sorry(this, i18n("The specified URL does not exist."));
         return;
     }
+    
+    //TODO: check if local dir is subpath of project dir
+    QString selectedLocalPath = m_ui->lineLocalPath->text();
+    if(!QDir(selectedLocalPath).exists()) {
+        KMessageBox::sorry(this, i18n("The specified local directory does not exist."));
+        return;
+    }
+    
     QDialog::accept();
 }
 
