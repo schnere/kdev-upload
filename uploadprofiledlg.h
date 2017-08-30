@@ -65,8 +65,7 @@ private:
     void updateUrl( const QUrl& url );
 
     Ui::UploadProfileDlg* m_ui;
-    
-    QUrl* projectPath;
+
 };
 
 
