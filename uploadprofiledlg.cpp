@@ -116,15 +116,8 @@ void UploadProfileDlg::updateUrl(const QUrl& url)
 
 void UploadProfileDlg::browse()
 {
-#if QT_VERSION >= 0x050400
     QUrl chosenDir = QFileDialog::getExistingDirectoryUrl(this, QString(), currentUrl());
-#else
-    QFileDialog dialog(this);
-    dialog.setDirectoryUrl(currentUrl());
-    dialog.setOptions(QFileDialog::ShowDirsOnly);
-    dialog.exec();
-    QUrl chosenDir = dialog.selectedUrls().first();
-#endif
+
     if(chosenDir.isValid()) {
         updateUrl(chosenDir);
     }
@@ -132,15 +125,8 @@ void UploadProfileDlg::browse()
 
 void UploadProfileDlg::browseLocal()
 {
-#if QT_VERSION >= 0x050400
     QUrl chosenDir = QFileDialog::getExistingDirectoryUrl(this, QString(), m_ui->lineLocalPath->text());
-#else
-    QFileDialog dialog(this);
-    dialog.setDirectoryUrl(m_ui->lineLocalPath->text());
-    dialog.setOptions(QFileDialog::ShowDirsOnly);
-    dialog.exec();
-    QUrl chosenDir = dialog.selectedUrls().first();
-#endif
+
     if(chosenDir.isValid()) {
         m_ui->lineLocalPath->setText(chosenDir.path());
     }
