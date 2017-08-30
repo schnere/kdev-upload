@@ -20,9 +20,9 @@ class UploadProfileItem : public QStandardItem
 {
     enum {
         UrlRole = Qt::UserRole+1,
-        IsDefaultRole = Qt::UserRole+2,
-        ProfileNrRole = Qt::UserRole+3,
-        LocalUrlRole = Qt::UserRole+4
+        IsDefaultRole,
+        ProfileNrRole,
+        LocalUrlRole
     };
 public:
     UploadProfileItem();
